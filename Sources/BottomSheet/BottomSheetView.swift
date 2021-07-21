@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Introspect
 
 @available(iOSApplicationExtension, unavailable)
 internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPositionEnum: RawRepresentable>: View where bottomSheetPositionEnum.RawValue == CGFloat, bottomSheetPositionEnum: CaseIterable {
@@ -109,7 +110,9 @@ internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPosit
                                         ScrollView {
                                             self.mainContent
                                         }
-                                        .disabled(!self.isTopPosition)
+                                        .introspectScrollView { scrollView in
+                                            scrollView.isScrollEnabled = self.isTopPosition
+                                        }
                                     } else {
                                         self.mainContent
                                     }
